@@ -1,3 +1,5 @@
+// This script performs the trusted setup required for teh Groth16 proving system
+// It generates the necessary keys for proof generation and verification
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const snarkjs = require('snarkjs');
 
@@ -9,6 +11,7 @@ const logger = {
 (async () => {
   try {
     // @ts-ignore
+    // Generates R1CS from the circuit
     await remix.call('circuit-compiler', 'generateR1cs', 'circuits/calculate_hash.circom');
 
     const ptau_final = "https://ipfs-cluster.ethdevops.io/ipfs/QmTiT4eiYz5KF7gQrDsgfCSTRv3wBPYJ4bRN1MmTRshpnW";
@@ -20,12 +23,15 @@ const logger = {
     const zkey_1 = { type: "mem" };
     const zkey_final = { type: "mem" };
 
+    // Initializes the proving key (zkey_0)
     console.log('newZkey')
     await snarkjs.zKey.newZKey(r1cs, ptau_final, zkey_0);
 
+    // Adds contributions to the proving key (zkey_1)
     console.log('contribute')
     await snarkjs.zKey.contribute(zkey_0, zkey_1, "p2_C1", "pa_Entropy1");
 
+    // Finalizes the proving key (zkey_final)
     console.log('beacon')
     await snarkjs.zKey.beacon(zkey_1, zkey_final, "B3", "0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20", 10);
 
@@ -37,10 +43,12 @@ const logger = {
     const verifyFromInit = await snarkjs.zKey.verifyFromInit(zkey_0, ptau_final, zkey_final);
     console.assert(verifyFromInit);
 
+    // Exports the verification key to JSOn
     console.log('exportVerificationKey')
     const vKey = await snarkjs.zKey.exportVerificationKey(zkey_final)
     await remix.call('fileManager', 'writeFile', 'scripts/groth16/zk/keys/verification_key.json', JSON.stringify(vKey, null, 2))
 
+    // Exports the final proving key
     console.log('save zkey_final')
     await remix.call('fileManager', 'writeFile', 'scripts/groth16/zk/keys/zkey_final.txt', JSON.stringify(Array.from(((zkey_final as any).data))))
 
