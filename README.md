@@ -1,37 +1,30 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## CIRCOM ZKP Hash Checker WORKSPACE
+# Exercises for the Foundations of Solidity and Smart Contract Development Certificate by Packt on Coursera 02
 
-Welcome to the Remix Circom ZKP Hash Checker Workspace.
+## Table of Contents
 
-The workspace comprises two main directories:
+1. [Description](#description)
+2. [License](#license)
+3. [Test Instructions](#test-instructions)
+4. [Questions](#questions)
 
-### circuits: Contains sample Hash Checker contracts. These can be compiled to generate a witness using 'Circom ZKP Compiler' plugin.
+## Description
 
-### scripts: Provides a sample script designed for a trusted setup using snarkjs. This script also aids in generating Solidity code, which is essential for on-chain deployment. There are 2 scripts options to choose from, Groth16 and Plonk.
+- Contains sample Hash Checker contracts and sample script designed for a trusted setup using snarkjs. This script also aids in generating Solidity code, which is essential for on-chain deployment. There are 2 scripts options to choose from, Groth16 and Plonk.
+- Commented for learning purposes.
 
-### first steps:
+## License
 
-#### 1) compile the hash checker circuit using the remix circom compiler. This will generate artifacts.
+- MIT
 
-#### 2) execute the file `groth16_trusted_setup.ts` found in `scripts/groth16` directory:
+## Test Instructions
 
-This step generates a verification key that can be used for generating proof, it will also generate a Solidity contract for on-chain verification.
+- Compile the hash checker circuit using the remix circom compiler. This will generate artifacts.
+- Execute the file `groth16_trusted_setup.ts` found in `scripts/groth16` directory.
+- Execute the file `groth16_zkproof.ts` found in `scripts/groth16`
 
-Note that this section should only be used for development purposes as this way of running the setup is heavily centralized (although some pieces of this script can be used to achieve that).
+## Questions
 
-This generates a verification key (`./zk/build/groth16/verification_key.json`) and a key for proof generation (`./zk/build/groth16/zkey_final.txt`).
-
-#### 3) execute the file `groth16_zkproof.ts` found in `scripts/groth16`:
-
-This script:
-
-- generate a witness and a proof of execution. The input parameters of `snarkjs.wtns.calculate` are:
-
-	- 4 values, that should remain private. We want to verify that we know a hash that satisfies these 4 values.
-	- a hash, this is a public signal.
-
-The witness will be generated only if the provided hash is the poseidon hash of these 4 values.
-
-- verify that the proof is valid `(snarkjs.groth16.verify)`
-
-#### The steps above for groth16 scripts also apply to plonk scripts.
+- Contact information for questions:
+- taylor01anderson@icloud.com
