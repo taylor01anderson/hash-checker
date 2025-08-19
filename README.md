@@ -1,6 +1,6 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# Exercises for the Foundations of Solidity and Smart Contract Development Certificate by Packt on Coursera 02
+# Hask Checker
 
 ## Table of Contents
 
